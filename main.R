@@ -37,19 +37,6 @@ dat <- subset(dat,dat$DEP_CRITERION == 1)
 dat <- dat %>% drop_na(c('GDS15'))
 write.csv(dat,'dat.csv',row.names = FALSE)
 
-setting <- data.frame(dat$STUDY_AUTHOR_YEAR,dat$GENERAL_SETTING)
-colnames(setting) <- c('Author','setting')
-setting<- setting %>% group_by(Author)%>% summarise(Other=sum(setting==0),Community=sum(setting==1),Medical_Inpatients =sum(setting==2),Medical_Outpatients =sum(setting==3),
-                                                    Nursing_Home=sum(setting==4),Primary_Care=sum(setting==5))
-setting_count<-as.data.frame(matrix(NA, nrow=2,ncol=5))
-colnames(setting_count) <- c('Community','Medical Inpatients','Medical Outpatients','Nursing Home','Primary Care')
-rownames(setting_count) <- c('number of studies','number of participants')
-setting_count$Community[2] <- sum(setting$Community)
-setting_count$`Medical Inpatients`[2] <- sum(setting$Medical_Inpatients)
-setting_count$`Medical Outpatients`[2] <- sum(setting$Medical_Outpatients)
-setting_count$`Nursing Home`[2] <- sum(setting$Nursing_Home)
-setting_count$`Primary Care`[2] <- sum(setting$Primary_Care)
-setting_count[1,] <- c(1,3,8,2,1)
 
 #Select the columns that are needed for main analysis
 table<- data.frame(dat$STUDY_AUTHOR_YEAR,dat$COUNTRY,dat$GDS15,dat$MDD)
